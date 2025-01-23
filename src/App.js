@@ -9,22 +9,23 @@ function App() {
   const [columnList, setColumnList] = useState([]);
 
   const recieveDataList = (data) => {
-    console.log(data)
     const reader = new FileReader();
 
     reader.onload = async ({ target }) => {
-      console.log(target)
       const csv = Papa.parse(target.result, {header:true});
       const parsedData = csv?.data;
-      console.log(parsedData)
+
       const rows = Object.keys(parsedData);
-      console.log(rows)
       const columns = Object.values(parsedData);
+
       const res = rows.reduce((acc, e, i) => {
           return [...acc,  columns[i]];
       }, []);
-
+      console.log(res)
       setDataList(res);
+      console.log(Object.keys(res[0]))
+      setColumnList(Object.keys(res[0]))
+      console.log(columnList)
     }
 
     reader.readAsText(data);
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <div className="App">
-      <Tools sendDataList={recieveDataList}/>
+      <Tools parentSendDataList={recieveDataList}/>
     </div>
   );
 }

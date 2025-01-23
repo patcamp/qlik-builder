@@ -1,34 +1,15 @@
-import { Component } from 'react';
+import '../Style/App.css';
+import Upload from './Upload'
 
-export default class Tools extends Component {
+export default function Tools({parentSendDataList}) {
 
-    constructor(props){
-        super(props)
-        this.state = {
-            // Initially, no file is selected
-            selectedFile: null
-        };
+    const middleManDataList = (data) => {
+        parentSendDataList(data);
     }
 
-    // On file select (from the pop up)
-    handleFileChange = (event) => {
-        // Update the state
-        this.setState({
-            selectedFile: event.target.files[0]
-        });
-    };
-    handleFileUpload = () => {
-        this.props.sendDataList(this.state.selectedFile);
-    }
-    
-    render(){
-        return (
+    return (
             <div>
-                <div>
-                    <input type="file" onChange={this.handleFileChange} accept='.csv' />
-                    <button onClick={this.handleFileUpload}>Upload!</button>
-                </div>
+                <Upload sendDataList={middleManDataList}/>
             </div>
         );
-    }
 }
