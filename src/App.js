@@ -34,9 +34,9 @@ function App() {
 
 
   return (
-    <div className="App">
-      <Tools parentSendDataList={recieveDataList}/>
-    </div>
+    <>
+      <Tools dataColsToSelect={columnList} parentSendDataList={recieveDataList}/>
+    </>
   );
 }
 
