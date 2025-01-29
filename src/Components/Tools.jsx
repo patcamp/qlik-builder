@@ -7,13 +7,18 @@ export default function Tools({parentSendDataList, dataColsToSelect}) {
         parentSendDataList(data);
     }
 
-    if (dataColsToSelect.length){
+    const onChecked = (event) => {
+        
+        dataColsToSelect[event.target.value]['isChecked'] = !dataColsToSelect[event.target.value]['isChecked']
+    };
+
+    if (Object.keys(dataColsToSelect).length){
         return (
             <div className="checkList">\
                 <div className="list-container">
-                    {dataColsToSelect.map((item) => (
+                    {Object.keys(dataColsToSelect).map((item) => (
                         <label>
-                            <input value={item} type="checkbox" /> 
+                            <input value={item} type="checkbox" onChange={onChecked}/> 
                             {item}
                         </label>
                     ))}

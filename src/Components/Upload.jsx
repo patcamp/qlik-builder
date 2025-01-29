@@ -18,7 +18,6 @@ export default class Upload extends Component {
         });
     };
     handleFileUpload = () => {
-        console.log(this.state.selectedFile)
         this.props.sendDataList(this.state.selectedFile);
     }
     

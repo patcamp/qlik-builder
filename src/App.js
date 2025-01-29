@@ -1,12 +1,14 @@
 import './Style/App.css';
-import Tools from './Components/Tools'
+import Tools from './Components/Tools';
+import Canvas from "./Components/Canvas";
 import Papa from "papaparse";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
   const [dataList, setDataList] = useState([]);
-  const [columnList, setColumnList] = useState([]);
+  const [columnList, setColumnList] = useState({});
+  const [selectedData, setSelectedData] = useState([]);
 
   const recieveDataList = (data) => {
     const reader = new FileReader();
@@ -21,21 +23,29 @@ function App() {
       const res = rows.reduce((acc, e, i) => {
           return [...acc,  columns[i]];
       }, []);
-      console.log(res)
       setDataList(res);
-      console.log(Object.keys(res[0]))
-      setColumnList(Object.keys(res[0]))
-      console.log(columnList)
+
+      setColumnList(() => {
+        let ret= {};
+        for (let key of Object.keys(res[0])){
+          ret =  {...ret, [key]: {isChecked: false}};
+        }
+        return ret
+      })
+
     }
 
     reader.readAsText(data);
   } 
 
+  const changeSelected = (selected) => {
 
+  }
 
   return (
     <>
-      <Tools dataColsToSelect={columnList} parentSendDataList={recieveDataList}/>
+      <Tools dataColsToSelect={columnList} parentSendDataList={recieveDataList} parentSelect={changeSelected}/>
+      <Canvas data={dataList} selectedColumn={columnList}/>
     </>
   );
 }
